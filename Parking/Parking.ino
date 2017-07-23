@@ -1,6 +1,5 @@
 #include <SoftwareSerial.h>
 #include <ArduinoJson.h>
-#include <Adafruit_SSD1306.h>
 #include <U8x8lib.h>
 
 SoftwareSerial serialSIM800(D5, D6);
