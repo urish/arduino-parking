@@ -30,7 +30,7 @@ bool readResponse(String expected = "OK", String ignore = "") {
         if (line == "") {
           continue;
         }
-        if (line[0] == '+' || line == "OVER-VOLTAGE WARNNING") {
+        if (line[0] == '+' || line == "OVER-VOLTAGE WARNNING" || line == "RDY" || line == "Call Ready" || line == "SMS Ready") {
           Serial.println("<<< " + line);
           if (line.startsWith(expected)) {
             return true;
