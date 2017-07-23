@@ -26,9 +26,14 @@ bool readResponse(String expected = "OK", String ignore = "") {
         if (line == "") {
           continue;
         }
-        if (line[0] == '+') {
+        if (line[0] == '+' || line == "OVER-VOLTAGE WARNNING") {
           Serial.println("<<< " + line);
           line = "";
+          Serial.println(":: " + expected);
+          Serial.println(line.startsWith(expected));
+          if (line.startsWith(expected)) {
+            return true;
+          }
           continue;
         }
         Serial.println("< " + line);
@@ -68,7 +73,7 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Start");
   serialSIM800.begin(9600);
   delay(3000);
@@ -147,10 +152,10 @@ void loop() {
   readResponse();
   sendCommand("AT+HTTPREAD");
   readResponse();
-  do {
-    sendCommand("AT+HTTPTERM");
-    delay(100);
-  } while (!readResponse());
+  readResponse("+HTTPACTION");
+  delay(100);
+  sendCommand("AT+HTTPTERM");
+  readResponse();
   delay(10000);
 }
 
