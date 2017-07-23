@@ -90,7 +90,7 @@ void resetModem() {
   sendCommand("AT+SAPBR=2,1");
   readResponse();
 
-  lcd.println("Wait");
+  lcd.println("Connecting...");
 
   do {
     sendCommand("AT+CGREG?");
@@ -105,7 +105,6 @@ void resetModem() {
     delay(100);
   } while (!readResponse("+CGATT: 1"));
 
-  lcd.println("Connected!");
   lcd.clearDisplay();
   lcd.home();
 }
